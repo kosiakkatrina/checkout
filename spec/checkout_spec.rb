@@ -13,4 +13,11 @@ describe Checkout do
 
         expect(checkout.total).to eq(9.25)
     end
+
+    it "allows the second item to be scanned" do 
+        item = "002"
+        checkout.scan(item)
+
+        expect(checkout.total).to eq(45.00)
+    end
 end
