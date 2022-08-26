@@ -1,16 +1,16 @@
 require "checkout"
 
 describe Checkout do
+    let(:checkout) { Checkout.new }
+
     it "has initial total of £0" do 
-        co = Checkout.new
-        expect(co.total).to eq(0)
+        expect(checkout.total).to eq(0)
     end
 
-    it "allows items to be scanned" do 
-        co = Checkout.new
+    it "allows the first item to be scanned" do 
         item = "001"
-        co.scan(item)
-        
-        expect(co.total).to eq(9.25)
+        checkout.scan(item)
+
+        expect(checkout.total).to eq(9.25)
     end
 end
