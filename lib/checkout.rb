@@ -1,15 +1,13 @@
 class Checkout 
     attr_reader :total
 
+    ITEMS = { "001" => { price: 9.25 }, "002" => { price: 45.00 } }
+
     def initialize
         @total = 0
     end
 
     def scan(item)
-        if item == "001"
-            @total = 9.25
-        else
-            @total = 45.00
-        end
+        @total = ITEMS[item][:price]
     end
 end
