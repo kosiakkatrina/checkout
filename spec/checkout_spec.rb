@@ -20,4 +20,13 @@ describe Checkout do
 
         expect(checkout.total).to eq(45.00)
     end
+
+    it "allows schanning multiple items" do 
+        first_item = "002"
+        second_item = "003"
+        checkout.scan(first_item)
+        checkout.scan(second_item)
+
+        expect(checkout.total).to eq(64.95)
+    end
 end
