@@ -1,3 +1,5 @@
+require "checkout"
+
 describe Checkout do
     it "has initial total of £0" do 
         co = Checkout.new
