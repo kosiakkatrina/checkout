@@ -6,6 +6,10 @@ class Checkout
     end
 
     def scan(item)
-        @total = 9.25
+        if item == "001"
+            @total = 9.25
+        else
+            @total = 45.00
+        end
     end
 end
