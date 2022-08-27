@@ -56,5 +56,15 @@ describe Checkout do
 
             expect(discounted_checkout.total).to eq(36.95)
         end
+
+        it "applies multiple provided discounts" do
+            discounted_checkout = Checkout.new([method(:very_cheap_chairs_discount), method(:over_60_discount)])
+            discounted_checkout.scan(first_item)
+            discounted_checkout.scan(second_item)
+            discounted_checkout.scan(first_item)
+            discounted_checkout.scan(third_item)
+
+            expect(discounted_checkout.total).to eq(73.76)
+        end
     end
 end
