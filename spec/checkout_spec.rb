@@ -30,17 +30,30 @@ describe Checkout do
     end
 
     context "when applying discounts" do
-        def over_60_discount(total)
-            total >= 60 ? total*0.9 : total
+        def over_60_discount(total, *args)
+            total >= 60 ? total * 0.9 : total
         end
 
-        it "applies a provided discount" do
+        def very_cheap_chairs_discount(total, items)
+            items.count("001") > 1 ? total - Checkout::ITEMS["001"][:bulk_discount_amount] * items.count("001") : total
+        end
+
+        it "applies a provided total discount" do
             discounted_checkout = Checkout.new([method(:over_60_discount)])
             discounted_checkout.scan(first_item)
             discounted_checkout.scan(second_item)
             discounted_checkout.scan(third_item)
 
             expect(discounted_checkout.total).to be(66.78)
+        end
+
+        it "applies a provided item discount" do
+            discounted_checkout = Checkout.new([method(:very_cheap_chairs_discount)])
+            discounted_checkout.scan(first_item)
+            discounted_checkout.scan(third_item)
+            discounted_checkout.scan(first_item)
+
+            expect(discounted_checkout.total).to be(36.95)
         end
     end
 end
