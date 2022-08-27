@@ -1,17 +1,19 @@
 require "storage"
 
 class Checkout 
-    attr_reader :total
-
     def initialize(discounts = [])
-        @total = 0
         @scanned_items = []
         @discounts = discounts
     end
 
     def scan(item)
-        @total += Storage::ITEMS[item][:price]
         @scanned_items << item
-        @discounts.each { |discount| @total = discount.call(@total, @scanned_items) }
+    end
+
+    def total 
+        price_before_discount = @scanned_items.map { |item| Storage::ITEMS[item][:price] }.sum
+        final_price = price_before_discount
+        @discounts.each { |discount| final_price = discount.call(price_before_discount, @scanned_items) }
+        final_price
     end
 end
