@@ -7,7 +7,11 @@ class Checkout
     end
 
     def scan(item)
-        @scanned_items << item
+        if Storage::ITEMS[item]
+            @scanned_items << item
+        else
+            raise "Item \"#{item}\" does not exist"
+        end
     end
 
     def total 
