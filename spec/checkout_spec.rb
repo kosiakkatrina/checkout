@@ -1,4 +1,5 @@
 require "checkout"
+require "storage"
 
 describe Checkout do
     let(:checkout) { Checkout.new }
@@ -35,7 +36,7 @@ describe Checkout do
         end
 
         def very_cheap_chairs_discount(total, items)
-            items.count("001") > 1 ? total - Checkout::ITEMS["001"][:bulk_discount_amount] * items.count("001") : total
+            items.count("001") > 1 ? total - Storage::ITEMS["001"][:bulk_discount_amount] * items.count("001") : total
         end
 
         it "applies a provided total discount" do
@@ -44,7 +45,7 @@ describe Checkout do
             discounted_checkout.scan(second_item)
             discounted_checkout.scan(third_item)
 
-            expect(discounted_checkout.total).to be(66.78)
+            expect(discounted_checkout.total).to eq(66.78)
         end
 
         it "applies a provided item discount" do
@@ -53,7 +54,7 @@ describe Checkout do
             discounted_checkout.scan(third_item)
             discounted_checkout.scan(first_item)
 
-            expect(discounted_checkout.total).to be(36.95)
+            expect(discounted_checkout.total).to eq(36.95)
         end
     end
 end
