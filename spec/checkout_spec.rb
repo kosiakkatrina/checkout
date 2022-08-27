@@ -29,6 +29,12 @@ describe Checkout do
 
             expect(checkout.total).to eq(64.95)
         end
+
+        it "cannot scan non existing items" do 
+            expect { checkout.scan("fake_item") }.to raise_error(RuntimeError, "Item \"fake_item\" does not exist")
+
+            expect(checkout.total).to eq(0)
+        end
     end
 
     context "when applying discounts" do
